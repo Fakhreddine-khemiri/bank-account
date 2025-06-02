@@ -39,4 +39,33 @@ public class AccountTest {
         assertThrows(IllegalArgumentException.class, () -> account.deposit(BigDecimal.ZERO));
         assertEquals(initialBalance, account.getBalance());
     }
+
+
+    @Test
+    void givenAnAccountWithSufficientBalance_whenAWithdrawalOfPositiveAmountIsMade_thenBalanceShouldDecrease() {
+        account.deposit(BigDecimal.valueOf(200.0)); // Initial deposit to have balance
+        account.withdraw(BigDecimal.valueOf(50.0));
+        assertEquals(BigDecimal.valueOf(150.0), account.getBalance());
+    }
+
+    @Test
+    void givenAnAccountWithInsufficientBalance_whenAWithdrawalIsAttempted_thenAnIllegalArgumentExceptionShouldBeThrownAndBalanceUnchanged() {
+        account.deposit(BigDecimal.valueOf(50.0)); // Initial balance
+        BigDecimal initialBalance = account.getBalance();
+
+        assertThrows(IllegalArgumentException.class, () -> account.withdraw(BigDecimal.valueOf(100.0)));
+        assertEquals(initialBalance, account.getBalance());
+    }
+
+    @Test
+    void givenAnAccount_whenAWithdrawalOfNegativeOrZeroAmountIsAttempted_thenAnIllegalArgumentExceptionShouldBeThrownAndBalanceUnchanged() {
+        account.deposit(BigDecimal.valueOf(100.0)); // Initial balance
+        BigDecimal initialBalance = account.getBalance();
+
+        assertThrows(IllegalArgumentException.class, () -> account.withdraw(BigDecimal.valueOf(-50.0)));
+        assertEquals(initialBalance, account.getBalance());
+
+        assertThrows(IllegalArgumentException.class, () -> account.withdraw(BigDecimal.ZERO));
+        assertEquals(initialBalance, account.getBalance());
+    }
 }
