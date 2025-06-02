@@ -19,4 +19,14 @@ public class Account {
         }
         this.balance = this.balance.add(amount);
     }
+
+    public void withdraw(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be positive.");
+        }
+        if (this.balance.compareTo(amount) < 0) {
+            throw new IllegalArgumentException("Insufficient funds for withdrawal.");
+        }
+        this.balance = this.balance.subtract(amount);
+    }
 }
