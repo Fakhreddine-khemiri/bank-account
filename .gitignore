@@ -1,0 +1,23 @@
+# Maven
+/target
+!.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ
+/.idea/
+*.iml
+*.ipr
+*.iws
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Spring Boot
+*.class
+.spring-boot-devtools.properties
+
+# Lombok
+*.lombok.config
+
+# Test reports
+surefire-reports/
