@@ -5,6 +5,7 @@ import com.bankkata.config.AccountControllerTestConfig;
 import com.bankkata.infrastructure.api.dto.DepositRequest;
 import com.bankkata.infrastructure.api.dto.WithdrawalRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,10 @@ public class AccountControllerTest {
     @Autowired
     private AccountService accountService;
 
+    @BeforeEach
+    void resetMocks() {
+        reset(accountService);
+    }
 
     @Test
     @DisplayName("POST /deposit - Valid request should return OK and success message")

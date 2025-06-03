@@ -31,6 +31,11 @@ public class AccountController {
 
     @PostMapping("/withdrawal")
     public ResponseEntity<String> withdraw(@Valid @RequestBody WithdrawalRequest request) {
-        return null;
+        try {
+            accountService.withdraw(request.amount());
+            return ResponseEntity.ok("Withdrawal successful. New balance: " + accountService.getBalance());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
