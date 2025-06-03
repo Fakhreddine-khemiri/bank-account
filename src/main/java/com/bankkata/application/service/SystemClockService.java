@@ -1,6 +1,5 @@
-package com.bankkata.infrastructure;
+package com.bankkata.application.service;
 
-import com.bankkata.domain.service.ClockService;
 import org.springframework.stereotype.Component;
 
 import java.time.Clock;

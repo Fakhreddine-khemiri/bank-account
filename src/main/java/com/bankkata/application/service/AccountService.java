@@ -1,4 +1,4 @@
-package com.bankkata.domain.service;
+package com.bankkata.application.service;
 
 import com.bankkata.domain.model.Account;
 import com.bankkata.domain.model.Transaction;
