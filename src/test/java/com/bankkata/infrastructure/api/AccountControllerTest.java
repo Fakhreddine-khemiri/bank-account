@@ -2,7 +2,10 @@ package com.bankkata.infrastructure.api;
 
 import com.bankkata.application.service.AccountService;
 import com.bankkata.config.AccountControllerTestConfig;
+import com.bankkata.domain.model.Transaction;
+import com.bankkata.domain.model.TransactionType;
 import com.bankkata.infrastructure.api.dto.DepositRequest;
+import com.bankkata.infrastructure.api.dto.TransactionResponse;
 import com.bankkata.infrastructure.api.dto.WithdrawalRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +21,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -96,6 +104,46 @@ public class AccountControllerTest {
                 .andExpect(jsonPath("$").value(currentBalance.doubleValue()));
 
         verify(accountService).getBalance();
+    }
+
+
+    @Test
+    @DisplayName("GET /statement - Should return OK and list of transactions")
+    void whenGetStatement_thenReturnsOkAndTransactionList() throws Exception {
+        LocalDate date1 = LocalDate.of(2024, 1, 10);
+        LocalDate date2 = LocalDate.of(2024, 1, 12);
+
+        List<Transaction> domainTransactions = Arrays.asList(
+                new Transaction(date1, TransactionType.DEPOSIT, BigDecimal.valueOf(200.00), BigDecimal.valueOf(200.00)),
+                new Transaction(date2, TransactionType.WITHDRAWAL, BigDecimal.valueOf(50.00), BigDecimal.valueOf(150.00))
+        );
+        when(accountService.getStatementTransactions()).thenReturn(domainTransactions);
+
+        List<TransactionResponse> expectedResponse = domainTransactions.stream()
+                .map(TransactionResponse::fromDomain)
+                .collect(Collectors.toList());
+
+        mockMvc.perform(get("/api/account/statement")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(expectedResponse)));
+
+        verify(accountService).getStatementTransactions();
+    }
+
+    @Test
+    @DisplayName("GET /statement - Empty list should return OK and empty array")
+    void givenNoTransactions_whenGetStatement_thenReturnsOkAndEmptyList() throws Exception {
+        when(accountService.getStatementTransactions()).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/api/account/statement")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isEmpty());
+
+        verify(accountService).getStatementTransactions();
     }
 
 }
