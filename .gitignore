@@ -1,6 +1,6 @@
 # Maven
-/target
-!backend/.mvn/wrapper/maven-wrapper.jar
+/backend/target
+/backend/.mvn/wrapper/maven-wrapper.jar
 
 # IntelliJ
 /.idea/
@@ -13,11 +13,11 @@
 Thumbs.db
 
 # Spring Boot
-*.class
-.spring-boot-devtools.properties
+/backend/*.class
+/backend/.spring-boot-devtools.properties
 
 # Lombok
-*.lombok.config
+/backend/*.lombok.config
 
 # Test reports
 surefire-reports/
