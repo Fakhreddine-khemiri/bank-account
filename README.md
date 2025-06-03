@@ -19,7 +19,6 @@ Allow a bank client to:
 - Apply **SOLID principles** and **lightweight DDD**
 - Structure the project with a clear and scalable architecture
 - Use **Conventional Commits**
-- Automatically generate a **changelog**
 - Minimal **CI/CD** via GitHub Actions
 - Prepare for future integration with an **Angular front-end**
 
