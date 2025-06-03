@@ -29,4 +29,8 @@ public class AccountService {
     public List<Transaction> getStatementTransactions() {
         return account.getTransactions();
     }
+
+    public BigDecimal getBalance() {
+        return account.getBalance();
+    }
 }
