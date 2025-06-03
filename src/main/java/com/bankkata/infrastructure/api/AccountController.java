@@ -5,10 +5,9 @@ import com.bankkata.infrastructure.api.dto.DepositRequest;
 import com.bankkata.infrastructure.api.dto.WithdrawalRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/api/account")
@@ -37,5 +36,10 @@ public class AccountController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/balance")
+    public ResponseEntity<BigDecimal> getBalance() {
+        return ResponseEntity.ok(accountService.getBalance());
     }
 }

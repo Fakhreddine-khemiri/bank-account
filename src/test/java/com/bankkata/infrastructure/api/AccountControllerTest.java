@@ -20,9 +20,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AccountController.class)
 @AutoConfigureMockMvc
@@ -67,14 +67,12 @@ public class AccountControllerTest {
     @Test
     @DisplayName("POST /withdrawal - Valid request should return OK and success message")
     void givenValidWithdrawalRequest_whenPostWithdrawal_thenReturnsOk() throws Exception {
-        // Given
         WithdrawalRequest withdrawalRequest = new WithdrawalRequest(BigDecimal.valueOf(50.00));
         BigDecimal balanceAfterWithdrawal = BigDecimal.valueOf(150.00);
 
         doNothing().when(accountService).withdraw(withdrawalRequest.amount());
         when(accountService.getBalance()).thenReturn(balanceAfterWithdrawal);
 
-        // When & Then
         mockMvc.perform(post("/api/account/withdrawal")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(withdrawalRequest)))
@@ -84,4 +82,20 @@ public class AccountControllerTest {
         verify(accountService).withdraw(withdrawalRequest.amount());
         verify(accountService).getBalance();
     }
+
+    @Test
+    @DisplayName("GET /balance - Should return OK and current balance")
+    void whenGetBalance_thenReturnsOkAndBalance() throws Exception {
+        BigDecimal currentBalance = BigDecimal.valueOf(500.00);
+        when(accountService.getBalance()).thenReturn(currentBalance);
+
+        mockMvc.perform(get("/api/account/balance")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").value(currentBalance.doubleValue()));
+
+        verify(accountService).getBalance();
+    }
+
 }
