@@ -2,6 +2,7 @@ package com.bankkata.infrastructure.api;
 
 import com.bankkata.application.service.AccountService;
 import com.bankkata.infrastructure.api.dto.DepositRequest;
+import com.bankkata.infrastructure.api.dto.WithdrawalRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,5 +27,10 @@ public class AccountController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PostMapping("/withdrawal")
+    public ResponseEntity<String> withdraw(@Valid @RequestBody WithdrawalRequest request) {
+        return null;
     }
 }

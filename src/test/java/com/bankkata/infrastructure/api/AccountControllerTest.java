@@ -3,6 +3,7 @@ package com.bankkata.infrastructure.api;
 import com.bankkata.application.service.AccountService;
 import com.bankkata.config.AccountControllerTestConfig;
 import com.bankkata.infrastructure.api.dto.DepositRequest;
+import com.bankkata.infrastructure.api.dto.WithdrawalRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,6 +56,27 @@ public class AccountControllerTest {
                 .andExpect(content().string("Deposit successful. New balance: " + expectedBalanceAfterDeposit));
 
         verify(accountService).deposit(depositRequest.amount());
+        verify(accountService).getBalance();
+    }
+
+    @Test
+    @DisplayName("POST /withdrawal - Valid request should return OK and success message")
+    void givenValidWithdrawalRequest_whenPostWithdrawal_thenReturnsOk() throws Exception {
+        // Given
+        WithdrawalRequest withdrawalRequest = new WithdrawalRequest(BigDecimal.valueOf(50.00));
+        BigDecimal balanceAfterWithdrawal = BigDecimal.valueOf(150.00);
+
+        doNothing().when(accountService).withdraw(withdrawalRequest.amount());
+        when(accountService.getBalance()).thenReturn(balanceAfterWithdrawal);
+
+        // When & Then
+        mockMvc.perform(post("/api/account/withdrawal")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(withdrawalRequest)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Withdrawal successful. New balance: " + balanceAfterWithdrawal));
+
+        verify(accountService).withdraw(withdrawalRequest.amount());
         verify(accountService).getBalance();
     }
 }
