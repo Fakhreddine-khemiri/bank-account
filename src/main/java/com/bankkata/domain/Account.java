@@ -3,6 +3,8 @@ package com.bankkata.domain;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 public class Account {
@@ -28,5 +30,9 @@ public class Account {
             throw new IllegalArgumentException("Insufficient funds for withdrawal.");
         }
         this.balance = this.balance.subtract(amount);
+    }
+
+    public List<Transaction> getTransactions() {
+        return List.of(new Transaction(LocalDate.now(), TransactionType.DEPOSIT, BigDecimal.ZERO, BigDecimal.ZERO));
     }
 }

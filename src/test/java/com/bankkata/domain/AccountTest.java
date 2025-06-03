@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -67,5 +68,28 @@ public class AccountTest {
 
         assertThrows(IllegalArgumentException.class, () -> account.withdraw(BigDecimal.ZERO));
         assertEquals(initialBalance, account.getBalance());
+    }
+
+    @Test
+    void givenAnAccount_whenADepositIsMade_thenATransactionShouldBeRecorded() {
+        account.deposit(BigDecimal.valueOf(100.0));
+        List<Transaction> transactions = account.getTransactions(); // This method will be added
+        assertEquals(1, transactions.size());
+        Transaction transaction = transactions.getFirst();
+        assertEquals(TransactionType.DEPOSIT, transaction.type()); // Using record accessor
+        assertEquals(BigDecimal.valueOf(100.0), transaction.amount());
+        assertEquals(BigDecimal.valueOf(100.0), transaction.balanceAfterTransaction());
+    }
+
+    @Test
+    void givenAnAccount_whenAWithdrawalIsMade_thenATransactionShouldBeRecorded() {
+        account.deposit(BigDecimal.valueOf(200.0));
+        account.withdraw(BigDecimal.valueOf(50.0));
+        List<Transaction> transactions = account.getTransactions();
+        assertEquals(2, transactions.size()); // Deposit + Withdrawal
+        Transaction withdrawalTransaction = transactions.get(1); // Second transaction
+        assertEquals(TransactionType.WITHDRAWAL, withdrawalTransaction.type());
+        assertEquals(BigDecimal.valueOf(50.0), withdrawalTransaction.amount());
+        assertEquals(BigDecimal.valueOf(150.0), withdrawalTransaction.balanceAfterTransaction());
     }
 }
