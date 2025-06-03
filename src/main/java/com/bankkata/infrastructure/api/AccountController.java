@@ -1,6 +1,7 @@
 package com.bankkata.infrastructure.api;
 
 import com.bankkata.application.service.AccountService;
+import com.bankkata.domain.model.Transaction;
 import com.bankkata.infrastructure.api.dto.DepositRequest;
 import com.bankkata.infrastructure.api.dto.TransactionResponse;
 import com.bankkata.infrastructure.api.dto.WithdrawalRequest;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/account")
@@ -47,6 +49,10 @@ public class AccountController {
 
     @GetMapping("/statement")
     public ResponseEntity<List<TransactionResponse>> getStatement() {
-        return null;
+        List<Transaction> domainTransactions = accountService.getStatementTransactions();
+        List<TransactionResponse> response = domainTransactions.stream()
+                .map(TransactionResponse::fromDomain)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
     }
 }
