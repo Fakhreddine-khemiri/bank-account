@@ -1,4 +1,4 @@
-package com.bankkata.domain;
+package com.bankkata.domain.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

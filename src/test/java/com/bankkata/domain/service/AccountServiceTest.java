@@ -1,5 +1,8 @@
-package com.bankkata.domain;
+package com.bankkata.domain.service;
 
+import com.bankkata.domain.model.Account;
+import com.bankkata.domain.model.Transaction;
+import com.bankkata.domain.model.TransactionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

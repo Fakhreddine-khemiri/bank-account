@@ -1,5 +1,7 @@
-package com.bankkata.domain;
+package com.bankkata.domain.service;
 
+import com.bankkata.domain.model.Account;
+import com.bankkata.domain.model.Transaction;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

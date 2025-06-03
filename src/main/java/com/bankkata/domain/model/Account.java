@@ -1,4 +1,4 @@
-package com.bankkata.domain;
+package com.bankkata.domain.model;
 
 import lombok.Getter;
 

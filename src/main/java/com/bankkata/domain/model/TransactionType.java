@@ -1,4 +1,4 @@
-package com.bankkata.domain;
+package com.bankkata.domain.model;
 
 public enum TransactionType {
     DEPOSIT,
