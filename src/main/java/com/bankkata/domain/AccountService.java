@@ -24,10 +24,6 @@ public class AccountService {
         account.withdraw(amount, clockService.now());
     }
 
-    public BigDecimal getBalance() {
-        return account.getBalance();
-    }
-
     public List<Transaction> getStatementTransactions() {
         return account.getTransactions();
     }
