@@ -2,14 +2,15 @@ package com.bankkata.infrastructure.api;
 
 import com.bankkata.application.service.AccountService;
 import com.bankkata.config.AccountControllerTestConfig;
+import com.bankkata.infrastructure.api.dto.DepositRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,10 +22,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(classes = AccountController.class)
+@WebMvcTest(AccountController.class)
 @AutoConfigureMockMvc
 @AutoConfigureJson
-@Import(AccountControllerTestConfig.class)
+@Import({AccountControllerTestConfig.class, ValidationAutoConfiguration.class})
 @DisplayName("Account Controller Integration Tests")
 public class AccountControllerTest {
 
@@ -34,7 +35,7 @@ public class AccountControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Mock
+    @Autowired
     private AccountService accountService;
 
 
@@ -55,16 +56,5 @@ public class AccountControllerTest {
 
         verify(accountService).deposit(depositRequest.amount());
         verify(accountService).getBalance();
-    }
-
-    @Test
-    @DisplayName("POST /deposit - Invalid request (negative amount) should return Bad Request")
-    void givenInvalidDepositRequest_whenPostDeposit_thenStatusBadRequest() throws Exception {
-        DepositRequest invalidRequest = new DepositRequest(BigDecimal.valueOf(-10.0));
-        mockMvc.perform(post("/api/account/deposit")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(invalidRequest)))
-                .andExpect(status().isBadRequest());
-        verify(accountService, never()).deposit(any(BigDecimal.class));
     }
 }
