@@ -1,15 +1,17 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  constructor(httpClient: HttpClient) {
+  constructor(private http: HttpClient) {
 
   }
-  getBalance = (): Observable<number> => of(0);
+  getBalance(): Observable<number> {
+    return this.http.get<number>('/api/account/balance');
+  }
 
 
 }
