@@ -3,7 +3,7 @@ import {AccountService} from "../../service/account.service";
 import {CurrencyPipe, NgIf} from "@angular/common";
 
 @Component({
-  selector: 'bank-account-home',
+  selector: 'bank-account-balance',
   standalone: true,
   imports: [
     CurrencyPipe,
@@ -19,7 +19,7 @@ import {CurrencyPipe, NgIf} from "@angular/common";
       <p>{{ balance() | currency: 'EUR' }}</p>
     </ng-template>`
 })
-export class HomeComponent implements OnInit {
+export class BalanceComponent implements OnInit {
   constructor(private accountService: AccountService) {
   }
 

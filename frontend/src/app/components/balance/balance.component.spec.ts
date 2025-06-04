@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
+import { BalanceComponent } from './balance.component';
 import {AccountService} from "../../service/account.service";
 import {of} from "rxjs";
 import {By} from "@angular/platform-browser";
 
 describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+  let component: BalanceComponent;
+  let fixture: ComponentFixture<BalanceComponent>;
   let accountServiceMock: jest.Mocked<AccountService>;
 
   beforeEach(() => {
@@ -15,10 +15,10 @@ describe('HomeComponent', () => {
       getBalance: jest.fn()
     } as any;
     TestBed.configureTestingModule({
-      imports: [HomeComponent],
+      imports: [BalanceComponent],
       providers: [{ provide: AccountService, useValue: accountServiceMock }]
     });
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(BalanceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
