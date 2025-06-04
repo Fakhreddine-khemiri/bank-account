@@ -21,7 +21,7 @@ describe('AccountService', () => {
     const result = await firstValueFrom(service.getBalance());
 
     expect(result).toBe(100);
-    expect(httpClientMock.get).toHaveBeenCalledWith('/api/account/balance');
+    expect(httpClientMock.get).toHaveBeenCalledWith('http://localhost:8080/api/account/balance');
   });
 
   it('should send a deposit request', async () => {
@@ -32,8 +32,22 @@ describe('AccountService', () => {
 
     expect(result).toBe(mockResponse);
     expect(httpClientMock.post).toHaveBeenCalledWith(
-      '/api/account/deposit',
+      'http://localhost:8080/api/account/deposit',
       { amount: 50 },
+      { responseType: 'text' }
+    );
+  });
+
+  it('should send a withdrawal request', async () => {
+    const mockResponse = 'Withdrawal successful. New balance: 150';
+    httpClientMock.post!.mockReturnValue(of(mockResponse));
+
+    const result = await firstValueFrom(service.withdraw(30));
+
+    expect(result).toBe(mockResponse);
+    expect(httpClientMock.post).toHaveBeenCalledWith(
+      'http://localhost:8080/api/account/withdrawal',
+      { amount: 30 },
       { responseType: 'text' }
     );
   });
