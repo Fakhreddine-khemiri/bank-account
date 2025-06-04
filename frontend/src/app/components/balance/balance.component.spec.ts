@@ -2,7 +2,7 @@ import {AccountService} from '../../service/account.service';
 import {of} from 'rxjs';
 import {BalanceComponent} from "./balance.component";
 
-describe('BalanceComponent (sans TestBed)', () => {
+describe('BalanceComponent', () => {
   let component: BalanceComponent;
   let mockAccountService: jest.Mocked<AccountService>;
 

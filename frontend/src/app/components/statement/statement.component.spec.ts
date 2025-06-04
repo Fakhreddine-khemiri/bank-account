@@ -19,7 +19,8 @@ describe('StatementComponent', () => {
     component = new StatementComponent(mockAccountService);
   });
 
-  it('should fetch and store the transactions', () => {
+  it('should fetch and store the transactions', async() => {
+    await component.ngOnInit();
     expect(component.transactions.length).toBe(2);
     expect(component.transactions[0].type).toBe('deposit');
   });
