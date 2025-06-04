@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
   providedIn: 'root',
 })
 export class AccountService {
-  private baseUrl = '/api/account';
+  private baseUrl = 'http://localhost:8080/api/account';
   constructor(private http: HttpClient) {
 
   }
