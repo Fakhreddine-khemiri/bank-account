@@ -21,3 +21,11 @@ Thumbs.db
 
 # Test reports
 surefire-reports/
+
+# Frontend (Angular, Node)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.env
+frontend/.vitepress/
+frontend/.output/
