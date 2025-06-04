@@ -1,12 +1,19 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
-  template: `<router-outlet></router-outlet>`
+  imports: [RouterModule, MatToolbarModule, MatButtonModule],
+  template: `
+    <mat-toolbar color="primary">
+      <button mat-button routerLink="/balance">Balance</button>
+      <button mat-button routerLink="/deposit-withdraw">Deposit/Withdraw</button>
+      <button mat-button routerLink="/statement">Statement</button>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  `,
 })
-export class AppComponent {
-}
+export class AppComponent {}
