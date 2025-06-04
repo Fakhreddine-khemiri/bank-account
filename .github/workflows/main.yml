@@ -32,3 +32,26 @@ jobs:
 
       - name: Build with Maven
         run: ./mvnw clean install --no-transfer-progress
+  frontend:
+    name: Build & Test Angular
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build app
+        run: npm run build
