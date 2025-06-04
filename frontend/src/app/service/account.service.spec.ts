@@ -23,4 +23,18 @@ describe('AccountService', () => {
     expect(result).toBe(100);
     expect(httpClientMock.get).toHaveBeenCalledWith('/api/account/balance');
   });
+
+  it('should send a deposit request', async () => {
+    const mockResponse = 'Deposit successful. New balance: 200';
+    httpClientMock.post!.mockReturnValue(of(mockResponse));
+
+    const result = await firstValueFrom(service.deposit(50));
+
+    expect(result).toBe(mockResponse);
+    expect(httpClientMock.post).toHaveBeenCalledWith(
+      '/api/account/deposit',
+      { amount: 50 },
+      { responseType: 'text' }
+    );
+  });
 });
