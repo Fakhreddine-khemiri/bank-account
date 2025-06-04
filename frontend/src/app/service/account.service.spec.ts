@@ -1,4 +1,4 @@
-import { AccountService } from './account.service';
+import {AccountService, TransactionResponse} from './account.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { firstValueFrom } from 'rxjs';
@@ -50,5 +50,19 @@ describe('AccountService', () => {
       { amount: 30 },
       { responseType: 'text' }
     );
+  });
+
+
+  it('should return a list of transactions', async () => {
+    const mockTransactions: TransactionResponse[] = [
+      { date: '2024-06-01', type: 'DEPOSIT', amount: 100, balanceAfter: 100 },
+      { date: '2024-06-02', type: 'WITHDRAWAL', amount: 50, balanceAfter: 50 }
+    ];
+    httpClientMock.get!.mockReturnValue(of(mockTransactions));
+
+    const result = await firstValueFrom(service.getStatement());
+
+    expect(result).toEqual(mockTransactions);
+    expect(httpClientMock.get).toHaveBeenCalledWith('/api/account/statement');
   });
 });

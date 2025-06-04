@@ -1,6 +1,13 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
+
+export interface TransactionResponse {
+  date: string;
+  type: 'DEPOSIT' | 'WITHDRAWAL';
+  amount: number;
+  balanceAfter: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -23,5 +30,7 @@ export class AccountService {
     return this.http.post(`${this.baseUrl}/withdrawal`, { amount }, { responseType: 'text' });
   }
 
-
+  getStatement(): Observable<TransactionResponse[]> {
+    return of([]);
+  }
 }
