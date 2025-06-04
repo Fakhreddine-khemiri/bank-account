@@ -19,4 +19,9 @@ export class AccountService {
     return this.http.post(`${this.baseUrl}/deposit`, {amount}, {responseType: 'text'});
   }
 
+  withdraw(amount: number): Observable<string> {
+    return this.http.post(`${this.baseUrl}/withdrawal`, { amount }, { responseType: 'text' });
+  }
+
+
 }
