@@ -4,7 +4,7 @@ import { AccountService } from '../../service/account.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { of, throwError } from 'rxjs';
 
-describe('TransactionComponent (no TestBed)', () => {
+describe('TransactionComponent', () => {
   let component: TransactionComponent;
   let mockAccountService: jest.Mocked<AccountService>;
   let mockSnackBar: jest.Mocked<MatSnackBar>;
