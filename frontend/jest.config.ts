@@ -8,7 +8,7 @@ export default {
     }
   },
   transform: {
-    '^.+\\.(ts|mjs|html|js)$': ['ts-jest', { useESM: true }]
+    '^.+\\.(ts|mjs|html|js)$': ['ts-jest', { useESM: true, tsconfig: 'tsconfig.spec.json' }]
   },
   moduleNameMapper: {},
   testEnvironment: 'jsdom',

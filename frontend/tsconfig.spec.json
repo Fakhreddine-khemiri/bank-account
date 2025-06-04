@@ -1,11 +1,15 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.json", // Assurez-vous que cela étend bien votre tsconfig de base
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "types": [
       "jest"
-    ]
+    ],
+    "esModuleInterop": true,              // <--- Très important
+    "allowSyntheticDefaultImports": true, // <--- Peut aider
+    "module": "ES2020",                   // <--- Ou "ESNext" si useESM est à true
+    "target": "ES2020"                    // <--- Ou une version plus récente
   },
   "include": [
     "src/**/*.spec.ts",
