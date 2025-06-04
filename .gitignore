@@ -1,5 +1,5 @@
 # Maven
-/backend/target
+/backend/target/*
 /backend/.mvn/wrapper/maven-wrapper.jar
 
 # IntelliJ
@@ -20,7 +20,7 @@ Thumbs.db
 /backend/*.lombok.config
 
 # Test reports
-surefire-reports/
+backend/surefire-reports/
 
 # Frontend (Angular, Node)
 frontend/node_modules/
